@@ -69,4 +69,43 @@ T(n) = \sqrt{n} \cdot T(\sqrt{n}) + n \leq (k+1)\times n = O(n\text{loglog}n)
 &\text{(10 points)}
 \end{align*}
 
+\section{Problem 5}
+Define $h_i = log_{2}n-log_{2}t_i\ s.t.\ 
+\text{the time of}\ i^{th}\ \text{operation is}\ h_{i}O(1)$.\\
+Define potential function\\
+$$\Phi_i =
+\begin{cases}
+0\quad \text{if}\ i=0\\
+\sum\limits_{x=0}^{i} 
+	[\log_{2}t_x - \log_{2}i]
+	\quad \text{if}\ 1\leq i\leq n
+\end{cases}
+$$ \\
+In other words, $\Phi_i-\Phi_{i-1}=\log_{2}t_i - \log_{2}i\quad \text{for}\ i>0$.\\
+Let $\hat{h_i} = h_i +\Phi_i -\Phi_{i-1} $ \ be the amortised cost of $i^{th}$\ operations. The total cost:
+$$\sum\limits_{i=1}^{n}h_i=\sum\limits_{i=1}^{n}\hat{h_i}+\Phi_0-\Phi_n$$
+By definition,\\
+\begin{align*}
+&\Phi_0-\Phi_n\\
+&=-\sum\limits_{x=0}^n (\log_2{t_x}-\log_2i) \\
+&=-\left(\sum\limits_{x=0}^{n}\log_2t_x-\sum\limits_{x=0}^{n}\log_2i\right)\\
+&=0\\
+\end{align*}
+And\\
+\begin{align*}
+&\sum\limits_{i=1}^{n}\hat{h_i}\\
+&=\sum\limits_{i=1}^{n}\left[h_i+\Phi_i-\Phi_{i-1}\right]\\
+&=\sum\limits_{i=1}^{n}\log_2n-\log_2i\\
+&=\sum\limits_{i=1}^{n}\log_2\frac{n}{i}\\
+&=O(n) \quad\text{Please refer slides {\em algo2016fall03} p.53$\sim$55 for elaboration of the last equation}
+\end{align*}
+By using the potential method, the amount of the time of the $n$ operations is\\
+$$\left(\sum\limits_{i=1}^{n}h_i\right)O(1)=O(n)$$
+\section{Problem 6}
+Let $h(x)=\max\{f(x),g(x)\}$\\
+we choose $c_1=1$ and $c_2=1$ to satisfy the inequality:\\
+$$c_1h(x)\leq h(x)\leq c_2h(x)$$\\
+And note that $f(x)$ and $g(x)$ should be non-negative for $x$ large enough.So,\\
+$$c_1h(x)\leq h(x)\leq f(x)+g(x)\leq 2h(x)\leq 2c_2h(x)\quad\text{for x large enough}$$\\
+For the inequality above, $f(x)+g(x)=\Theta(\max\{f(x),g(x)\})$ holds.
 \end{document}
