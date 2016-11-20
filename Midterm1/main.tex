@@ -70,6 +70,18 @@ T(n) = \sqrt{n} \cdot T(\sqrt{n}) + n \leq (k+1)\times n = O(n\text{loglog}n)
 \end{align*}
 
 \section{Problem 5}
+The purpose of this question is to understand the process of potential method. You get $10$ points if we can see a complete framework of potential method from your answer, full credits if your proof is correct with potential method.\\\\
+
+The complete potential method process includes:
+\begin{itemize}
+
+\item a potential function\ $\Phi(i)$
+\item the relation between actual cost and amortized cost\ $\hat{t}_i = t_i+\Phi_i-\Phi_{i-1}$
+\item use the summation of amortized cost as the upper bound of the actual total cost\ $\sum\limits_{i=1}^{n}\hat{t}_i=\sum\limits_{i=1}^{n}t_i+\Phi_0-\Phi_n$\ , and\ $\Phi_0-\Phi_n$ should satisfy some condition to bound the actual cost reasonably (typically,\ $\Phi_0-\Phi_n\leq 0$)
+\item prove the upper bound\ $\sum\limits_{i=1}^{n}\hat{t}_i$ to be lower enough
+\end{itemize}
+
+\subsection{Sample Solution}
 Define $h_i = log_{2}n-log_{2}t_i\ s.t.\ 
 \text{the time of}\ i^{th}\ \text{operation is}\ h_{i}O(1)$.\\
 Define potential function\\
@@ -82,13 +94,13 @@ $$\Phi_i =
 \end{cases}
 $$ \\
 In other words, $\Phi_i-\Phi_{i-1}=\log_{2}t_i - \log_{2}i\quad \text{for}\ i>0$.\\
-Let $\hat{h_i} = h_i +\Phi_i -\Phi_{i-1} $ \ be the amortised cost of $i^{th}$\ operations. The total cost:
+Let $\hat{h_i} = h_i +\Phi_i -\Phi_{i-1} $ \ be the amortized cost of $i^{th}$\ operations. The total cost:
 $$\sum\limits_{i=1}^{n}h_i=\sum\limits_{i=1}^{n}\hat{h_i}+\Phi_0-\Phi_n$$
 By definition,\\
 \begin{align*}
 &\Phi_0-\Phi_n\\
-&=-\sum\limits_{x=0}^n (\log_2{t_x}-\log_2i) \\
-&=-\left(\sum\limits_{x=0}^{n}\log_2t_x-\sum\limits_{x=0}^{n}\log_2i\right)\\
+&=-\sum\limits_{i=0}^n (\log_2{t_i}-\log_2i) \\
+&=-\left(\sum\limits_{i=0}^{n}\log_2t_i-\sum\limits_{i=0}^{n}\log_2i\right)\\
 &=0\\
 \end{align*}
 And\\
@@ -101,11 +113,39 @@ And\\
 \end{align*}
 By using the potential method, the amount of the time of the $n$ operations is\\
 $$\left(\sum\limits_{i=1}^{n}h_i\right)O(1)=O(n)$$
+\subsection{Another Sample Solution from Student's Answer}
+The total time of\ $n$\ operations:\\
+$$\sum\limits_{i=1}^{n}O(\log_2n-\log_2t_i) = \sum\limits_{i=1}^{n}O(\log_2n-\log_2i)$$
+Define\ $\Phi_i$\ as the potential function:\\
+$$i(\log_2i-\log_2n)$$
+Define\ $h_i$\ as the actual cost,\ $\hat{h}_i$\ as the amortized cost\ $s.t.$\ each operation cost\ $t_iO(1)$\ time, and\\
+$$\hat{h}_i=h_i+\Phi_i-\Phi_{i-1}$$
+We have
+$$\sum\limits_{i=1}^{n}h_i=\sum\limits_{i=1}^{n}\hat{h_i}+\Phi_0-\Phi_n$$
+By definition,\\
+\begin{align*}
+&\Phi_0-\Phi_n\\
+&=0-0\\
+&=0\\
+\end{align*}  
+And\\
+\begin{align*}
+&\sum\limits_{i=1}^{n}\hat{h_i}\\
+&=\sum\limits_{i=1}^{n}\left[h_i+\Phi_i-\Phi_{i-1}\right]\\
+&=\sum\limits_{i=1}^{n}\log_2n-\log_2i+i(\log_2i-\log_2n)-(i-1)[\log_2(i-1)-\log_2n]\\
+&=\sum\limits_{i=1}^{n}\log_2n-\log_2i-\log_2n+i\log_2i-(i-1)\log_2(i-1)\\
+&=\sum\limits_{i=1}^{n}\log_2n-\log_2i-\log_2n+\log_2i+(i-1)\log_2i-(i-1)\log_2(i-1)\\
+&=\sum\limits_{i=1}^{n}(i-1)\log_2{\frac{i}{i-1}}\\
+&=\sum\limits_{i=1}^{n}O(1)
+\end{align*}
+By using the potential method, the amount of the time of the $n$ operations is\\
+$$\left(\sum\limits_{i=1}^{n}h_i\right)O(1)=O(n)$$
 \section{Problem 6}
 Let $h(x)=\max\{f(x),g(x)\}$\\
 we choose $c_1=1$ and $c_2=1$ to satisfy the inequality:\\
 $$c_1h(x)\leq h(x)\leq c_2h(x)$$\\
-And note that $f(x)$ and $g(x)$ should be non-negative for $x$ large enough.So,\\
+And note that\ $f(x)$ and\ $g(x)$ should be non-negative for $x$ large enough.So,\\
 $$c_1h(x)\leq h(x)\leq f(x)+g(x)\leq 2h(x)\leq 2c_2h(x)\quad\text{for x large enough}$$\\
-For the inequality above, $f(x)+g(x)=\Theta(\max\{f(x),g(x)\})$ holds.
+For the inequality above, $f(x)+g(x)=\Theta(\max\{f(x),g(x)\})$ holds.\\\\
+You get half credits if you ignore the assumption of\ $f(x)$ and $g(x)$\ being non-negative for $x$ large enough, and disprove the statement logically.  
 \end{document}
